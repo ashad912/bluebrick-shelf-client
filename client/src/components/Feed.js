@@ -10,6 +10,7 @@ export default () => {
 
     useEffect(() => {
         dispatch(fetchActivities())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
