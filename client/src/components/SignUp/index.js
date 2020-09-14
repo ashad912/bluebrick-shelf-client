@@ -78,7 +78,13 @@ const SignUp = () => {
                                 label="Position"
                                 items={positionItems}
                             />
-                            <Button variant="contained" color="primary" disabled={!dirty || !isValid} type="submit">Submit</Button>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                disabled={!dirty || !isValid} type="submit"
+                            >
+                                Submit
+                            </Button>
                         </Form>
                     )
                 }}

@@ -2,8 +2,22 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchActivities } from 'store/actions'
 
+import { List } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default () => {
+const useStyles = makeStyles(theme => ({
+    list: props => {
+        return {
+            border: `1px solid ${theme.palette.secondary.main}`,
+            [theme.breakpoints.up('sm')]: {
+                borderColor: theme.palette.primary.main
+            },
+            width: props.cool ? '50%' : 'auto'
+        }
+    }
+}))
+
+export default (props) => {
     const activities = useSelector(state => state.activities)
 
     const dispatch = useDispatch()
@@ -13,11 +27,11 @@ export default () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
+    const classes = useStyles(props)
     return (
-        <div data-testid='feed_component'>
+        <div style={{ width: '100%' }} data-testid='feed_component'>
 
-            <ul data-testid="feed_list">
+            <List className={classes.list} data-testid="feed_list">
                 <React.Fragment>
                     {activities.map((activity, index) => {
                         return (
@@ -29,7 +43,7 @@ export default () => {
                         )
                     })}
                 </React.Fragment>
-            </ul>
+            </List>
         </div>
     )
 }
