@@ -16,7 +16,18 @@ const FormikFormControl = (props) => {
     return (
         <FormControl fullWidth>
             <InputLabel required={required}>{label}</InputLabel>
-            <Select value={value} name={name} onChange={onChange} onBlur={onBlur} >
+            <Select
+                
+                MenuProps={{
+                    classes: {
+                        paper: 'selectStyles'
+                    }
+                }}
+                value={value}
+                name={name}
+                onChange={onChange}
+                onBlur={onBlur}
+            >
                 {children}
             </Select>
             <FormHelperText>{errorString}</FormHelperText>

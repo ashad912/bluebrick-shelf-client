@@ -1,7 +1,8 @@
 import React from 'react'
 import { Field, ErrorMessage } from 'formik'
 import PropTypes from 'prop-types'
-import './FormikField.css'
+import classnames from 'classnames'
+import './FormikField.scss'
 
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, withStyles } from '@material-ui/core/styles'
@@ -11,23 +12,21 @@ import { makeStyles, withStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles({
     underline: {
         '&:before': {
-            borderColor: 'green',
-            '&:hover': {
-                borderColor: 'green'
-            },
+            borderColor: 'green !important',
         },
         '&:after': {
-            borderColor: 'green',
-            '&:hover': {
-                borderColor: 'green'
-            },
+            borderColor: 'green !important',
         },
-        '&:hover:not': {
-            borderColor: 'green'
-        },
+        // Also -> https://stackoverflow.com/a/59773661
+        // Cool ::before, ::after examples -> https://www.youtube.com/watch?v=xoRbkm8XgfQ
+        // Adding sass to cra -> https://scotch.io/tutorials/using-sass-in-create-react-app-v2
 
 
+    },
+    labelFocused: {
+        color: 'green !important',
     }
+
 })
 
 
@@ -50,9 +49,20 @@ const FormikField = props => {
                 // Experiments with nested styles.
                 InputProps={{
                     classes: {
-                        underline: classes.underline
+                        underline: classes.underline,
                     }
 
+                }}
+                InputLabelProps={{
+                    classes: {
+                        root: 'myStyles', // Access by CSS file
+                        focused: classes.labelFocused // Access by myStyles
+                    }
+                }}
+                FormHelperTextProps={{
+                    classes: {
+                        root: 'myStyles'
+                    }
                 }}
 
             />
