@@ -1,5 +1,5 @@
-import React from 'react'
-import { Formik, Form } from 'formik'
+import React, { useEffect } from 'react'
+import { useFormikContext, Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
 import "./SignUp.css"
@@ -7,6 +7,7 @@ import "./SignUp.css"
 import Button from '@material-ui/core/Button';
 import FormikField from '../FormikField'
 import FormikSelect from 'components/FormikSelect'
+import FormikRating from 'components/FormikRating';
 
 const positionItems = [
     {
@@ -36,12 +37,31 @@ const SignUpSchema = Yup.object().shape({
         .min(8, "Too Short!")
         .required('Required'),
     position: Yup.string()
-        .required('Required')
+        .required('Required'),
+    rate: Yup.string()
+        .min(0.5)
+        .max(5)
 })
 
 const SignUp = () => {
 
+    const FormHandler = () => {
+
+        // Way to subscribe form fields <- 
+        // https://github.com/formium/formik/issues/1106
+        // https://stackoverflow.com/questions/60194242/how-to-listen-for-changes-on-formik-field-with-nested-values
+
+        // const { values } = useFormikContext()
+
+        // useEffect(() => {
+        //     values.rate = parseInt(values.rate) * 2
+        // }, [values.rate])
+
+        return null
+    }
+
     const handleSubmit = (values) => {
+        values.rate = parseInt(parseFloat(values.rate) * 2)
         alert(JSON.stringify(values))
     }
 
@@ -52,7 +72,8 @@ const SignUp = () => {
                 initialValues={{
                     email: '',
                     password: '',
-                    position: ''
+                    position: '',
+                    rate: 2.5,
                 }}
                 onSubmit={handleSubmit}
                 validationSchema={SignUpSchema}
@@ -78,13 +99,18 @@ const SignUp = () => {
                                 label="Position"
                                 items={positionItems}
                             />
+                            <FormikRating
+                                name="rate"
+                            />
                             <Button
                                 variant="contained"
                                 color="secondary"
-                                disabled={!dirty || !isValid} type="submit"
+                                disabled={!dirty || !isValid}
+                                type="submit"
                             >
                                 Submit
                             </Button>
+                            <FormHandler />
                         </Form>
                     )
                 }}
